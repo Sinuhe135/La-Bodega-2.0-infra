@@ -1,11 +1,10 @@
 terraform {
-  cloud {
-    organization = "TerranovaLabs"
-
-    workspaces {
-      project = "Learn Terraform"
-      name = "learn-terraform-aws-get-started"
-    }
+  backend "s3" {
+    bucket = "labodega-test-state"
+    key = "global/s3/terraform.tfstate"
+    region = "us-west-2"
+    use_lockfile = true
+    encrypt = true
   }
   required_providers {
     aws = {
