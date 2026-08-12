@@ -13,26 +13,21 @@ module "vpc" {
   enable_dns_hostnames    = true
 }
 
-#define security group for the EC2 instance
-
 resource "aws_security_group" "main_sg" {
   name = "${var.vpc_name}-main_sg"
   description = "Allow SSH"
   vpc_id = module.vpc.vpc_id
 }
 
-resource "aws_vpc_security_group_ingress_rule" "allow_ssh_ingress" {
-  security_group_id = aws_security_group.main_sg.id
-  ip_protocol = "tcp"
+module "allow_ssh_ingress" {
+  source = "../security_group_entries/ssh_ingress"
 
-  from_port = 22
-  to_port = 22
+  security_group_id = aws_security_group.main_sg.id
   cidr_ipv4 = "0.0.0.0/0"
 }
 
-resource "aws_vpc_security_group_egress_rule" "allow_all_egress" {
-  security_group_id = aws_security_group.main_sg.id
-  ip_protocol = "-1"
+module "allow_all_egress" {
+  source = "../security_group_entries/all_egress"
 
-  cidr_ipv4 = "0.0.0.0/0"
+  security_group_id = aws_security_group.main_sg.id
 }
