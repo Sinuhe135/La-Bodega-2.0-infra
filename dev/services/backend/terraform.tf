@@ -1,11 +1,11 @@
 terraform {
-  backend "s3" {
-    bucket = "labodega-test-state"
-    key = "dev/services/backend/terraform.tfstate"
-    region = "us-west-2"
-    use_lockfile = true
-    encrypt = true
-  }
+  # backend "s3" {
+  #   bucket = "labodega-test-state"
+  #   key = "dev/services/backend/terraform.tfstate"
+  #   region = "us-west-2"
+  #   use_lockfile = true
+  #   encrypt = true
+  # }
   required_providers {
     aws = {
       source  = "hashicorp/aws"

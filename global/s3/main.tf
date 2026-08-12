@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "terraform_state" {
-    bucket = "labodega-test-state"
+    bucket = "labodega-state"
     # Prevent accidental deletion of this S3 bucket
     lifecycle {
         prevent_destroy = true

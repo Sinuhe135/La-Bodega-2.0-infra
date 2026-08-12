@@ -8,7 +8,7 @@ resource "aws_key_pair" "key_pair" {
 }
 
 module "backend" {
- source = "../../../modules/services/backend" 
+ source = "../../../modules/services/ec2" 
 
  instance_name = "learn-terraform-1"
 
@@ -18,7 +18,7 @@ module "backend" {
 }
 
 module "backend2" {
- source = "../../../modules/services/backend" 
+ source = "../../../modules/services/ec2" 
 
  instance_name = "learn-terraform-2"
 

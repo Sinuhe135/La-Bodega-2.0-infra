@@ -9,7 +9,7 @@ terraform {
   required_version = ">= 1.2"
 
   backend "s3" {
-    bucket = "labodega-test-state"
+    bucket = "labodega-state"
     key = "global/s3/terraform.tfstate"
     region = "us-west-2"
     use_lockfile = true
