@@ -5,5 +5,5 @@ provider "aws" {
 module "vpc"{
     source="../../modules/vpc/main_vpc"
 
-    vpc_name = "test"
+    vpc_name = "labodega-dev"
 }
