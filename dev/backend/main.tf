@@ -23,6 +23,9 @@ provider "aws" {
 module "lambda" {
   source = "../../modules/services/lambda"
 
+  vpc_remote_state_bucket = "labodega-state"
+  vpc_remote_state_key = "dev/vpc/terraform.tfstate"
+
   function_name = "labodega-dev-function"
   execution_role_arn = aws_iam_role.lambda_execution_role.arn
 
