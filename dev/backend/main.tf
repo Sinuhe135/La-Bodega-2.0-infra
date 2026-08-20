@@ -24,12 +24,9 @@ module "lambda" {
   source = "../../modules/services/lambda"
 
   function_name = "labodega-dev-function"
-  execution_role_arn = aws_iam_role.test_role.arn
-}
+  execution_role_arn = aws_iam_role.lambda_execution_role.arn
 
-module "lambda2" {
-  source = "../../modules/services/lambda"
-
-  function_name = "labodega-dev-function2"
-  execution_role_arn = aws_iam_role.test_role.arn
+  depends_on = [
+      aws_iam_role_policy_attachment.lambda_logs,
+    ]
 }
