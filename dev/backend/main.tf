@@ -30,6 +30,7 @@ module "lambda" {
   execution_role_arn = aws_iam_role.lambda_execution_role.arn
 
   depends_on = [
-      aws_iam_role_policy_attachment.lambda_logs,
-    ]
+    aws_iam_role_policy_attachment.lambda_logs,
+    aws_iam_role_policy_attachment.lambda_vpc_access,
+  ]
 }
