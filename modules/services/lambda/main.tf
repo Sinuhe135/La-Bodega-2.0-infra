@@ -27,7 +27,9 @@ resource "aws_lambda_function" "lambda" {
         data.terraform_remote_state.vpc.outputs.vpc_private_subnets[0], 
         data.terraform_remote_state.vpc.outputs.vpc_private_subnets[1]
       ]
-      security_group_ids = [] #need security group or this shi will fail
+      security_group_ids = [
+        data.terraform_remote_state.vpc.outputs.default_security_group_id
+      ]
     }
 
     depends_on = [

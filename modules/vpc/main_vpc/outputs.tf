@@ -8,6 +8,11 @@ output "vpc_private_subnets" {
     description = "List of private subnets created in the VPC"
 }
 
+output "default_security_group_id" {
+  value = module.vpc.default_security_group_id
+  description = "ID of the default security group created for the VPC"
+}
+
 # output "main_security_group_id" {
 #     value = aws_security_group.main_sg.id
 #     description = "ID of the main security group created for the VPC"
