@@ -7,14 +7,36 @@ data "terraform_remote_state" "vpc" {
   }
 }
 
+data "terraform_remote_state" "rds" {
+  backend = "s3"
+  config = {
+    region = "us-west-2"
+    bucket = var.rds_remote_state_bucket
+    key = var.rds_remote_state_key
+  }
+}
+
 resource "aws_lambda_function" "lambda" {
     function_name = var.function_name
-
     role          = var.execution_role_arn
 
-    handler       = "index.handler"
     runtime       = "nodejs22.x"
+    handler       = "index.handler"
     filename      = data.archive_file.example.output_path
+    
+    timeout = 10
+
+    # environment {
+    #   variables = {
+    #     JWT_KEY        = var.jwt_key
+    #     MYSQL_HOST     = data.terraform_remote_state.rds.outputs.endpoint
+    #     MYSQL_PORT     = data.terraform_remote_state.rds.outputs.port
+    #     MYSQL_DATABASE = data.terraform_remote_state.rds.outputs.database_name
+    #     MYSQL_USER     = data.terraform_remote_state.rds.outputs.username
+    #     MYSQL_PASSWORD = var.mysql_password
+    #     NODE_ENV       = var.node_env
+    #   }
+    # }
 
     logging_config {
       log_format            = "JSON"

@@ -14,6 +14,6 @@ output "port" {
 }
 
 output "endpoint" {
-  value       = aws_db_instance.rds.endpoint
+  value       = aws_db_instance.rds.address
   description = "The database endpoint"
 }

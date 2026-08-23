@@ -1,4 +1,3 @@
-
 variable "vpc_remote_state_bucket" {
   description = "The name of the S3 bucket for the VPC's remote state"
   type = string
@@ -6,6 +5,16 @@ variable "vpc_remote_state_bucket" {
 
 variable "vpc_remote_state_key" {
  description = "The path for the VPC's remote state in S3"
+ type = string
+}
+
+variable "rds_remote_state_bucket" {
+  description = "The name of the S3 bucket for the RDS's remote state"
+  type = string
+}
+
+variable "rds_remote_state_key" {
+ description = "The path for the RDS's remote state in S3"
  type = string
 }
 
@@ -17,4 +26,18 @@ variable "function_name" {
 variable "execution_role_arn" {
   description = "The ARN of the IAM role that Lambda assumes when it executes your function."
   type        = string
+}
+
+variable "jwt_key" {
+  type      = string
+  sensitive = true
+}
+
+variable "mysql_password" {
+  type      = string
+  sensitive = true
+}
+
+variable "node_env" {
+  type = string
 }

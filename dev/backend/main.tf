@@ -12,9 +12,15 @@ module "lambda" {
 
   vpc_remote_state_bucket = "labodega-state"
   vpc_remote_state_key = "dev/vpc/terraform.tfstate"
+  rds_remote_state_bucket = "labodega-state"
+  rds_remote_state_key = "dev/database/terraform.tfstate"
 
   function_name = "labodega-dev-function"
   execution_role_arn = aws_iam_role.lambda_execution_role.arn
+
+  jwt_key        = var.jwt_key
+  mysql_password = var.mysql_password
+  node_env = "development"
 
   depends_on = [
     aws_iam_role_policy_attachment.lambda_logs,
