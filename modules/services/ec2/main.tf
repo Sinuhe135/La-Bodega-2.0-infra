@@ -7,8 +7,6 @@ data "terraform_remote_state" "vpc" {
   }
 }
 
-# EC2 instance configuration
-
 data "aws_ami" "ubuntu" {
   most_recent = true
 
@@ -25,7 +23,9 @@ resource "aws_instance" "app_server" {
   instance_type = var.instance_type
   key_name = var.key_pair_name
 
-  vpc_security_group_ids = [data.terraform_remote_state.vpc.outputs.main_security_group_id]
+  vpc_security_group_ids = [
+    data.terraform_remote_state.vpc.outputs.default_security_group_id
+  ]
   subnet_id = data.terraform_remote_state.vpc.outputs.vpc_public_subnets[0]
   associate_public_ip_address = true
 

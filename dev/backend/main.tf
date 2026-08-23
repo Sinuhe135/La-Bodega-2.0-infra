@@ -5,11 +5,12 @@ provider "aws" {
 locals {
   api_dist_path = "${path.module}/../../../La-Bodega-2.0-API/dist/functions"
 
+  vpc_remote_state_bucket = "labodega-state"
+  vpc_remote_state_key    = "dev/vpc/terraform.tfstate"
+  rds_remote_state_bucket = "labodega-state"
+  rds_remote_state_key    = "dev/database/terraform.tfstate"
+
   lambda_common = {
-    vpc_remote_state_bucket = "labodega-state"
-    vpc_remote_state_key    = "dev/vpc/terraform.tfstate"
-    rds_remote_state_bucket = "labodega-state"
-    rds_remote_state_key    = "dev/database/terraform.tfstate"
     execution_role_arn      = aws_iam_role.lambda_execution_role.arn
     jwt_key                 = var.jwt_key
     mysql_password          = var.mysql_password
@@ -30,19 +31,30 @@ locals {
   }
 }
 
-# resource "aws_key_pair" "key_pair" {
-#   key_name = "test-key"
-#   public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH26iS1w31qt95EMjBYGSz37N+TQJ0vYHMoItWR09A+z terraform-test"
-# }
+resource "aws_key_pair" "bastion_key" {
+  key_name = "bastion-key"
+  public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPMKmX6BLFkflv0olZnBs5y6Ldikxy31c6fPjgKzt/M1 rayma@TunelCuantico"
+}
+
+module "ec2" {
+  source = "../../modules/services/ec2"
+
+  vpc_remote_state_bucket = local.vpc_remote_state_bucket
+  vpc_remote_state_key    = local.vpc_remote_state_key
+
+  instance_name   = "labodega-dev-bastion"
+  instance_type   = "t3.micro"
+  key_pair_name   = aws_key_pair.bastion_key.key_name
+}
 
 module "lambda" {
   for_each = local.lambda_functions
   source   = "../../modules/services/lambda"
 
-  vpc_remote_state_bucket = local.lambda_common.vpc_remote_state_bucket
-  vpc_remote_state_key    = local.lambda_common.vpc_remote_state_key
-  rds_remote_state_bucket = local.lambda_common.rds_remote_state_bucket
-  rds_remote_state_key    = local.lambda_common.rds_remote_state_key
+  vpc_remote_state_bucket = local.vpc_remote_state_bucket
+  vpc_remote_state_key    = local.vpc_remote_state_key
+  rds_remote_state_bucket = local.rds_remote_state_bucket
+  rds_remote_state_key    = local.rds_remote_state_key
 
   function_name      = "labodega-dev2-${replace(each.key, "_", "-")}"
   execution_role_arn = local.lambda_common.execution_role_arn
