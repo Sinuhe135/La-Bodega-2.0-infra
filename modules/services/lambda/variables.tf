@@ -28,6 +28,12 @@ variable "execution_role_arn" {
   type        = string
 }
 
+variable "timeout" {
+  description = "The amount of time that Lambda allows a function to run before stopping it."
+  type        = number
+  default     = 10
+}
+
 variable "jwt_key" {
   type      = string
   sensitive = true

@@ -21,6 +21,9 @@ resource "aws_db_instance" "rds" {
   password             = var.db_password
 
   db_subnet_group_name = aws_db_subnet_group.rds_subnet_group.name
+  vpc_security_group_ids = [
+    data.terraform_remote_state.vpc.outputs.database_security_group_id
+  ]
 
   identifier           = "${var.identifier}-db"
   multi_az                    = false

@@ -17,3 +17,13 @@ output "bastion_security_group_id" {
     value = module.vpc.bastion_security_group_id
     description = "ID of the bastion security group created for the VPC"
 }
+
+output "database_security_group_id" {
+    value = module.vpc.database_security_group_id
+    description = "ID of the database security group created for the VPC"
+}
+
+output "lambda_security_group_id" {
+    value = module.vpc.lambda_security_group_id
+    description = "ID of the lambda security group created for the VPC"
+}

@@ -24,19 +24,19 @@ resource "aws_lambda_function" "lambda" {
     handler       = "${var.file_name}.handler"
     filename      = data.archive_file.example.output_path
     
-    timeout = 10
+    timeout = var.timeout
 
-    # environment {
-    #   variables = {
-    #     JWT_KEY        = var.jwt_key
-    #     MYSQL_HOST     = data.terraform_remote_state.rds.outputs.endpoint
-    #     MYSQL_PORT     = data.terraform_remote_state.rds.outputs.port
-    #     MYSQL_DATABASE = data.terraform_remote_state.rds.outputs.database_name
-    #     MYSQL_USER     = data.terraform_remote_state.rds.outputs.username
-    #     MYSQL_PASSWORD = var.mysql_password
-    #     NODE_ENV       = var.node_env
-    #   }
-    # }
+    environment {
+      variables = {
+        JWT_KEY        = var.jwt_key
+        MYSQL_HOST     = data.terraform_remote_state.rds.outputs.endpoint
+        MYSQL_PORT     = data.terraform_remote_state.rds.outputs.port
+        MYSQL_DATABASE = data.terraform_remote_state.rds.outputs.database_name
+        MYSQL_USER     = data.terraform_remote_state.rds.outputs.username
+        MYSQL_PASSWORD = var.mysql_password
+        NODE_ENV       = var.node_env
+      }
+    }
 
     logging_config {
       log_format            = "JSON"
@@ -50,7 +50,7 @@ resource "aws_lambda_function" "lambda" {
         data.terraform_remote_state.vpc.outputs.vpc_private_subnets[1]
       ]
       security_group_ids = [
-        data.terraform_remote_state.vpc.outputs.default_security_group_id
+        data.terraform_remote_state.vpc.outputs.lambda_security_group_id
       ]
     }
 

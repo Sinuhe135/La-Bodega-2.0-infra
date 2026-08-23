@@ -58,6 +58,7 @@ module "lambda" {
 
   function_name      = "labodega-dev2-${replace(each.key, "_", "-")}"
   execution_role_arn = local.lambda_common.execution_role_arn
+  timeout            = 10
 
   jwt_key        = local.lambda_common.jwt_key
   mysql_password = local.lambda_common.mysql_password
