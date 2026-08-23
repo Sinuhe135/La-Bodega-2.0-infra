@@ -24,7 +24,7 @@ resource "aws_instance" "app_server" {
   key_name = var.key_pair_name
 
   vpc_security_group_ids = [
-    data.terraform_remote_state.vpc.outputs.default_security_group_id
+    data.terraform_remote_state.vpc.outputs.bastion_security_group_id
   ]
   subnet_id = data.terraform_remote_state.vpc.outputs.vpc_public_subnets[0]
   associate_public_ip_address = true

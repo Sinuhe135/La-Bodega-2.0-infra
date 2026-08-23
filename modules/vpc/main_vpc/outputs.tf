@@ -13,7 +13,7 @@ output "default_security_group_id" {
   description = "ID of the default security group created for the VPC"
 }
 
-# output "main_security_group_id" {
-#     value = aws_security_group.main_sg.id
-#     description = "ID of the main security group created for the VPC"
-# }
+output "bastion_security_group_id" {
+    value = aws_security_group.bastion_sg.id
+    description = "ID of the bastion security group created for the VPC"
+}
