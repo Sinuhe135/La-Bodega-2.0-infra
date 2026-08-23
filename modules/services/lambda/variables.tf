@@ -41,3 +41,18 @@ variable "mysql_password" {
 variable "node_env" {
   type = string
 }
+
+variable "file_path" {
+  description = "The path to the Lambda function file"
+  type        = string
+}
+
+variable "file_name" {
+  description = "The name of the Lambda function file"
+  type        = string
+}
+
+variable "function_extension" {
+  description = "The extension of the Lambda function file"
+  type        = string
+}

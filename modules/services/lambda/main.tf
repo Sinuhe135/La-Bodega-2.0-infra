@@ -21,7 +21,7 @@ resource "aws_lambda_function" "lambda" {
     role          = var.execution_role_arn
 
     runtime       = "nodejs22.x"
-    handler       = "index.handler"
+    handler       = "${var.file_name}.handler"
     filename      = data.archive_file.example.output_path
     
     timeout = 10
@@ -70,6 +70,6 @@ resource "aws_cloudwatch_log_group" "log_group" {
 
 data "archive_file" "example" {
   type        = "zip"
-  source_file = "${path.module}/index.js"
-  output_path = "${path.module}/function.zip"
+  source_file = "${var.file_path}/${var.file_name}.${var.function_extension}"
+  output_path = "${path.module}/${var.function_name}.zip"
 }
