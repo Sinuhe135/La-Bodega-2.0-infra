@@ -70,6 +70,6 @@ resource "aws_cloudwatch_log_group" "log_group" {
 
 data "archive_file" "example" {
   type        = "zip"
-  source_file = "${var.file_path}/${var.file_name}.${var.function_extension}"
+  source_file = "${var.file_path}/${var.file_name}.js"
   output_path = "${path.module}/${var.function_name}.zip"
 }

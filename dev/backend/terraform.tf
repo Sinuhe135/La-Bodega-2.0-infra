@@ -1,10 +1,10 @@
 terraform {
   backend "s3" {
-    bucket = "labodega-state"
-    key = "dev/backend/terraform.tfstate"
-    region = "us-west-2"
+    bucket       = "labodega-state"
+    key          = "dev/backend/terraform.tfstate"
+    region       = "us-west-2"
     use_lockfile = true
-    encrypt = true
+    encrypt      = true
   }
   required_providers {
     aws = {

@@ -51,8 +51,3 @@ variable "file_name" {
   description = "The name of the Lambda function file"
   type        = string
 }
-
-variable "function_extension" {
-  description = "The extension of the Lambda function file"
-  type        = string
-}

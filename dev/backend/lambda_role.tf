@@ -1,5 +1,5 @@
 resource "aws_iam_role" "lambda_execution_role" {
-  name = "lambda_execution_role"
+  name               = "lambda_execution_role"
   assume_role_policy = data.aws_iam_policy_document.lambda_role_trust_policy.json
 
   tags = {
@@ -48,16 +48,16 @@ resource "aws_iam_policy" "lambda_vpc_access" {
   description = "IAM policy for VPC access from Lambda"
 
   policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
+    "Version" : "2012-10-17",
+    "Statement" : [
       {
-        "Effect": "Allow",
-        "Action": [
+        "Effect" : "Allow",
+        "Action" : [
           "ec2:CreateNetworkInterface",
           "ec2:DeleteNetworkInterface",
           "ec2:DescribeNetworkInterfaces"
         ],
-        "Resource": "*"
+        "Resource" : "*"
       }
     ]
   })
