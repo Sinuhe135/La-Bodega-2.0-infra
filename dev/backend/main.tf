@@ -72,3 +72,10 @@ module "lambda" {
     aws_iam_role_policy_attachment.lambda_vpc_access,
   ]
 }
+
+module "api_gateway" {
+  source = "../../modules/services/api_gateway"
+
+  identifier          = "labodega-dev"
+  lambda_function_arn = module.lambda.auth_login.lambda_invoke_arn
+}
