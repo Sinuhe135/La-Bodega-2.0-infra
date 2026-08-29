@@ -57,3 +57,8 @@ variable "file_name" {
   description = "The name of the Lambda function file"
   type        = string
 }
+
+variable "api_gateway_execution_arn" {
+  description = "The execution ARN of the API Gateway"
+  type        = string
+}

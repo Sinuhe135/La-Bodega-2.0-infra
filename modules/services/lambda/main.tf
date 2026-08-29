@@ -59,6 +59,17 @@ resource "aws_lambda_function" "lambda" {
     ]
 }
 
+resource "aws_lambda_permission" "lambda_permission" {
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.lambda.function_name
+  principal     = "apigateway.amazonaws.com"
+
+  # The /* part allows invocation from any stage, method and resource path
+  # within API Gateway.
+  source_arn = "${var.api_gateway_execution_arn}/*"
+}
+
 resource "aws_cloudwatch_log_group" "log_group" {
   name              = "/aws/lambda/${var.function_name}"
   retention_in_days = 14
