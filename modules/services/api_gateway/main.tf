@@ -3,16 +3,16 @@ resource "aws_apigatewayv2_api" "api" {
   protocol_type = "HTTP"
 
   cors_configuration {
-    allow_origins = ["https://labodega.velazduran.com", "http://localhost:3000"]
+    allow_origins = var.allow_origins
     allow_methods = ["*"]
     allow_headers = ["content-type", "authorization"]
   }
 }
 
 resource "aws_apigatewayv2_stage" "default_stage" {
-  api_id = aws_apigatewayv2_api.api.id
-  name   = "$default"
-  description = "Default stage" 
+  api_id      = aws_apigatewayv2_api.api.id
+  name        = "$default"
+  description = "Default stage"
 
   auto_deploy = true
 }

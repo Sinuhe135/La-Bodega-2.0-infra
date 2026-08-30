@@ -44,6 +44,7 @@ module "api_gateway" {
   source = "../../modules/services/api_gateway"
 
   identifier = "labodega-dev"
+  allow_origins = ["https://labodega-dev.velazduran.com", "http://localhost:3000"]
 }
 
 module "lambda" {
