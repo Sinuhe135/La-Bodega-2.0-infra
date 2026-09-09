@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "vpc"{
-    source="../../modules/vpc/main_vpc"
+    source="../../modules/stacks/vpc"
 
     vpc_name = "labodega-dev"
 }
