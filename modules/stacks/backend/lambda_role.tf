@@ -1,5 +1,5 @@
 resource "aws_iam_role" "lambda_execution_role" {
-  name               = "lambda_execution_role"
+  name               = "${var.identifier}-lambda-execution-role"
   assume_role_policy = data.aws_iam_policy_document.lambda_role_trust_policy.json
 
   tags = {
@@ -22,7 +22,7 @@ data "aws_iam_policy_document" "lambda_role_trust_policy" {
 }
 
 resource "aws_iam_policy" "lambda_logging" {
-  name        = "lambda-logging"
+  name        = "${var.identifier}-lambda-logging"
   path        = "/"
   description = "IAM policy for logging from Lambda"
 
@@ -43,7 +43,7 @@ resource "aws_iam_policy" "lambda_logging" {
 }
 
 resource "aws_iam_policy" "lambda_vpc_access" {
-  name        = "lambda-vpc-access"
+  name        = "${var.identifier}-lambda-vpc-access"
   path        = "/"
   description = "IAM policy for VPC access from Lambda"
 

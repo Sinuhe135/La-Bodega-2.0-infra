@@ -12,5 +12,3 @@ module "database" {
   db_username = "admin"
   db_password = var.db_password
 }
-
-# test vpc and database creation
