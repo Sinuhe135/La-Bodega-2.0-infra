@@ -1,7 +1,3 @@
-resource "aws_s3_bucket" "app_bucket" {
-    bucket = "labodega-dev-frontend"
-}
-
 data "aws_iam_policy_document" "origin_bucket_policy" {
   statement {
     sid    = "AllowCloudFrontServicePrincipalReadWrite"
