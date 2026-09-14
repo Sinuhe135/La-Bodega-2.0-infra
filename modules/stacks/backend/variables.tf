@@ -13,6 +13,11 @@ variable "rds_remote_state_key" {
   type        = string
 }
 
+variable "regional_certificates_remote_state_key" {
+  description = "The regional certificates remote state key."
+  type        = string
+}
+
 variable "api_dist_path" {
   description = "Path to the compiled API Lambda functions (dist/functions)."
   type        = string

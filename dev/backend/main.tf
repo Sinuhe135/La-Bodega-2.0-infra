@@ -8,6 +8,7 @@ module "backend" {
   identifier           = "labodega-dev"
   vpc_remote_state_key = "dev/vpc/terraform.tfstate"
   rds_remote_state_key = "dev/database/terraform.tfstate"
+  regional_certificates_remote_state_key = "dev/certificates/regional/terraform.tfstate"
 
   bastion_key_name   = "bastion-key"
   bastion_public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPMKmX6BLFkflv0olZnBs5y6Ldikxy31c6fPjgKzt/M1 rayma@TunelCuantico"

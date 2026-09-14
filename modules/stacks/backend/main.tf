@@ -1,6 +1,7 @@
 locals {
   vpc_remote_state_bucket = "labodega-state"
   rds_remote_state_bucket = "labodega-state"
+  regional_certificates_remote_state_bucket = "labodega-state"
 
   lambda_functions = {
     auth_check   = { dir = "auth", file_name = "check", route = "/auth/check", method = "GET" }
@@ -13,6 +14,15 @@ locals {
 
     account_create              = { dir = "account", file_name = "create", route = "/account", method = "POST" }
     account_get_all_by_category = { dir = "account", file_name = "get_all_by_category", route = "/account/all/{categoryId}", method = "GET" }
+  }
+}
+
+data "terraform_remote_state" "regional_certificates" {
+  backend = "s3"
+  config = {
+    region = "us-west-2"
+    bucket = local.regional_certificates_remote_state_bucket
+    key = var.regional_certificates_remote_state_key
   }
 }
 
@@ -37,6 +47,8 @@ module "api_gateway" {
 
   identifier    = var.identifier
   allow_origins = var.allow_origins
+  domain_name = data.terraform_remote_state.regional_certificates.outputs.api_domain_name
+  domain_certificate_arn = data.terraform_remote_state.regional_certificates.outputs.api_certificate_arn
 }
 
 module "lambda" {
