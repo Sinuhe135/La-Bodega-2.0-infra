@@ -8,4 +8,3 @@ module "frontend" {
   identifier                   = "labodega-dev"
   certificate_remote_state_key = "dev/certificates/terraform.tfstate"
 }
-#test deploy

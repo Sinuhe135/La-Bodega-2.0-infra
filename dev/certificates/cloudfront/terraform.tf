@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket       = "labodega-state"
-    key          = "dev/certificates/terraform.tfstate"
+    key          = "dev/certificates/cloudfront/terraform.tfstate"
     region       = "us-west-2"
     use_lockfile = true
     encrypt      = true

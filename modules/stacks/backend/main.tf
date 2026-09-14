@@ -35,7 +35,7 @@ module "ec2" {
 module "api_gateway" {
   source = "../../services/api_gateway/api_gateway_main"
 
-  identifier    = "${var.identifier}-api"
+  identifier    = var.identifier
   allow_origins = var.allow_origins
 }
 
