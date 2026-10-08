@@ -62,6 +62,45 @@ terraform apply
 
 Sensitive variables (`jwt_key`, `mysql_password`, `db_password`) are not stored in the repo - pass them via `TF_VAR_*` environment variables or a local `*.tfvars` file that is not committed.
 
+## Loading the database schema
+
+RDS lives in the private subnets and only accepts MySQL connections from the bastion security group, so the schema is loaded from the bastion EC2 instance (Ubuntu 24.04, public subnet, created by `dev/backend`).
+
+1. **Get the RDS endpoint and username** from the database stack:
+
+   ```bash
+   cd dev/database
+   terraform output endpoint
+   terraform output username
+   terraform output database_name
+   ```
+
+2. **Get the bastion's public IP** from the AWS console: EC2 > Instances (region `us-west-2`), select `labodega-dev-bastion`, and copy its **Public IPv4 address**.
+
+3. **SSH in and install the MySQL client** (a fresh instance doesn't have it), using the private key that matches the `bastion-key` key pair:
+
+   ```bash
+   ssh -i ~/.ssh/<bastion-private-key> ubuntu@<bastion-public-ip>
+   sudo apt update && sudo apt install -y mysql-client
+   ```
+
+4. **Create the schema file on the bastion**: open it with nano, paste the contents of the schema, then save and exit (`Ctrl+O`, `Enter`, `Ctrl+X`):
+
+   ```bash
+   nano schema.sql
+   ```
+
+5. **Load the schema** into RDS (you'll be prompted for the `db_password`):
+
+   ```bash
+   mysql -h <rds-endpoint> \
+         -u <username> \
+         -p \
+         <database_name> < schema.sql
+   ```
+
+The bastion's SSH ingress is open to `0.0.0.0/0`, so stop or destroy the instance when you're done if you don't need it.
+
 ## Notes
 
 - All resources are tagged/named with the `labodega-dev` identifier; adding another environment means adding a new folder under `dev/` (or promoting it to `prod/`) that points at new remote state keys.
